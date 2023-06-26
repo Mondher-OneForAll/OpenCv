@@ -87,3 +87,37 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 """
+
+# Merge Images
+img = cv2.imread("Resources/face.jpg")
+img = np.zeros_like(img)
+cv2.imshow("Black Screen", img)
+imgWM = cv2.imread("/home/mondher/Pictures/WM.png") 
+cv2.imshow("WaterMark", imgWM)
+imgHeight, imgWidth = img.shape[0],img.shape[1] 
+wmHeight, wmWidth = imgWM.shape[0],imgWM.shape[1]
+
+
+#Center of black image 
+cx, cy = imgWidth//2, imgHeight//2
+
+#Find the placement of WaterMark in the middle
+left_x = cx - wmWidth//2
+right_x = left_x + wmWidth
+top_y = cy - wmHeight//2
+bottom_y= top_y + wmHeight
+
+roi = img[top_y: bottom_y, left_x: right_x]
+
+addWeightedImage = cv2.addWeighted(roi, 0, imgWM, 1, 0)
+
+img[top_y: bottom_y, left_x: right_x] = addWeightedImage
+
+cv2.imshow("Final Image", img)
+cv2.imwrite("/home/mondher/PycharmProjects/KivyMD_OpenCv/Resources/WM.png", img)
+
+while True:
+    if cv2.waitKey(1) == ord('q'):
+        break
+
+cv2.destroyAllWindows()
