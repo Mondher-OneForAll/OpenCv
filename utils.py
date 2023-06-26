@@ -107,6 +107,7 @@ right_x = left_x + wmWidth
 top_y = cy - wmHeight//2
 bottom_y= top_y + wmHeight
 
+#Region of intereset of the main image to merge it with waterMark
 roi = img[top_y: bottom_y, left_x: right_x]
 
 addWeightedImage = cv2.addWeighted(roi, 0, imgWM, 1, 0)
